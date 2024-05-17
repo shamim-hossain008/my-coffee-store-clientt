@@ -68,7 +68,7 @@ const CoffeeCard = ({ coffee, coffees, setCoffees }) => {
               onClick={() => handleDelete(_id)}
               className="btn join-item bg-red-400"
             >
-              X
+              X 
             </button>
           </div>
         </div>
