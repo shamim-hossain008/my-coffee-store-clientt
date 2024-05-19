@@ -19,13 +19,16 @@ const SingUp = () => {
         // new user has been created clint side
         const createdAt = result.user?.metadata?.creationTime;
         const user = { email, createdAt: createdAt };
-        fetch("http://localhost:5150/user", {
-          method: "POST",
-          headers: {
-            "content-type": "application/json",
-          },
-          body: JSON.stringify(user),
-        })
+        fetch(
+          "https://my-coffee-store-server-kj6dglhun-shamims-projects-88fb060a.vercel.app/user",
+          {
+            method: "POST",
+            headers: {
+              "content-type": "application/json",
+            },
+            body: JSON.stringify(user),
+          }
+        )
           .then((res) => res.json())
           .then((data) => {
             if (data.insertedId) {
