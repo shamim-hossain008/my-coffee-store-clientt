@@ -1,10 +1,40 @@
-const SignIn = () => {
-//   const handleSignIn = (e) => {
-//     e.preventDefault();
+import { useContext } from "react";
+import { AuthContext } from "../providers/AuthProvider";
 
-//     const form = e.target;
-//     console.log(form.email.value, form.password.value);
-//   };
+const SignIn = () => {
+  const { SignInUser } = useContext(AuthContext);
+
+  const handleSignIn = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    console.log(email, password);
+
+    SignInUser(email, password)
+      .then((result) => {
+        console.log(result.user);
+        const user = {
+          email,
+          lastLoggedAt: result.user?.metadata?.lastSignInTime,
+        };
+        // update last logged at in the database
+        fetch("http://localhost:5150/user", {
+          method: "PATCH",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(user),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            console.log(data);
+          });
+      })
+      .catch((error) => {
+        console.error("Sign in error:", error.message);
+      });
+  };
 
   return (
     <div className="hero min-h-screen bg-base-200">
